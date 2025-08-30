@@ -147,6 +147,8 @@ app.post("/chat", async (req, res) => {
   
   for (let i = 0; i < messages.length; i++) {
     const message = messages[i];
+    let audioGenerated = false;
+    
     try {
       // generate audio file with timeout
       const fileName = `audios/message_${i}.mp3`;
@@ -159,7 +161,9 @@ app.post("/chat", async (req, res) => {
         new Promise((_, reject) => setTimeout(() => reject(new Error('Audio generation timeout')), 5000))
       ]);
       
-      // generate lipsync with timeout
+      audioGenerated = true;
+      
+      // generate lipsync with timeout only if audio was generated
       await Promise.race([
         lipSyncMessage(i),
         new Promise((_, reject) => setTimeout(() => reject(new Error('Lip sync timeout')), 3000))
