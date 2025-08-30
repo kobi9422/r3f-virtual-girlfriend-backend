@@ -15,7 +15,16 @@ const voiceID = "21m00Tcm4TlvDq8ikWAM"; // Rachel voice
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://r3f-virtual-girlfriend-frontend-474z.onrender.com',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
